@@ -4,8 +4,8 @@ defmodule Tetris.Brick do
             rotation: 0,
             reflection: false
 
-  def new do
-    __struct__()
+  def new(attributes \\ []) do
+    __struct__(attributes)
   end
 
   def new_random do
@@ -26,11 +26,15 @@ defmodule Tetris.Brick do
   end
 
   def up(brick) do
-    # nil
+    %{brick | location: point_up(brick.location)}
   end
 
   def down(brick) do
     %{brick | location: point_down(brick.location)}
+  end
+
+  def point_up({x, y}) do
+    {x, y - 1}
   end
 
   def point_down({x, y}) do
@@ -65,5 +69,50 @@ defmodule Tetris.Brick do
   def random_reflection do
     [true, false]
     |> Enum.random()
+  end
+
+  def points(%{name: :l}) do
+    [
+      {2, 1},
+      {2, 2},
+      {2, 3},
+      {3, 3}
+    ]
+  end
+
+  def points(%{name: :i}) do
+    [
+      {2, 1},
+      {2, 2},
+      {2, 3},
+      {2, 4}
+    ]
+  end
+
+  def points(%{name: :o}) do
+    [
+      {2, 2},
+      {3, 2},
+      {2, 3},
+      {3, 3}
+    ]
+  end
+
+  def points(%{name: :z}) do
+    [
+      {2, 2},
+      {2, 3},
+      {3, 3},
+      {3, 4}
+    ]
+  end
+
+  def points(%{name: :t}) do
+    [
+      {2, 1},
+      {2, 2},
+      {3, 2},
+      {2, 3}
+    ]
   end
 end
