@@ -10,12 +10,15 @@ defmodule Tetris.Points do
 
   def mirror(points) do
     points
-    |> Enum.map(fn {x, y} -> {4 - x, y} end)
+    |> Enum.map(fn {x, y} -> {5 - x, y} end)
   end
+
+  def mirror(points, false), do: points
+  def mirror(points, true), do: mirror(points)
 
   def flip(points) do
     points
-    |> Enum.map(fn {x, y} -> {x, 4 - y} end)
+    |> Enum.map(fn {x, y} -> {x, 5 - y} end)
   end
 
   def rotate_90(points) do
@@ -31,5 +34,24 @@ defmodule Tetris.Points do
       rotate_90(points),
       degrees - 90
     )
+  end
+
+  def to_string(points) do
+    map =
+      points
+      |> Enum.map(fn key -> {key, ":black_small_square:"} end)
+      |> Map.new()
+
+    for y <- 1..4, x <- 1..4 do
+      Map.get(map, {x, y}, ":white_small_square:")
+    end
+    |> Enum.chunk_every(4)
+    |> Enum.map(&Enum.join/1)
+    |> Enum.join("\n")
+  end
+
+  def print(points) do
+    IO.puts(__MODULE__.to_string(points))
+    points
   end
 end
