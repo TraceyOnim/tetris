@@ -118,6 +118,12 @@ defmodule Tetris.Brick do
     ]
   end
 
+  def color(%{name: :i}), do: :blue
+  def color(%{name: :l}), do: :green
+  def color(%{name: :z}), do: :orange
+  def color(%{name: :o}), do: :red
+  def color(%{name: :t}), do: :yellow
+
   def prepare(brick) do
     brick
     |> points()

@@ -87,6 +87,42 @@ defmodule BrickTest do
     |> assert_point({1, 1})
   end
 
+  test "should convert brick to string" do
+    actual = new_brick() |> Tetris.Brick.to_string()
+    expected = "OXOO\nOXOO\nOXOO\nOXOO"
+
+    assert actual == expected
+  end
+
+  test "should inspect brick" do
+    actual = new_brick() |> inspect()
+
+    expected = """
+    OXOO
+    OXOO
+    OXOO
+    OXOO
+    """
+
+    assert "#{actual}\n" == expected
+  end
+
+  test "should return color for each shape" do
+    shapes_color = [{:i, :blue}, {:l, :green}, {:z, :orange}, {:o, :red}, {:t, :yellow}]
+
+    Enum.each(shapes_color, fn {shape, color} ->
+      actual = new_brick(name: shape) |> color()
+      assert color == actual
+    end)
+  end
+
+  test "should return points with color" do
+    actual = Tetris.Points.with_color([{1, 1}], :purple)
+    expected = [{1, 1, :purple}]
+
+    assert actual == expected
+  end
+
   def new_brick(attributes \\ []), do: new(attributes)
 
   def assert_point([actual], expected) do
